@@ -183,3 +183,6 @@ def pipeline(img):
     cv2.putText(output,"Distance from center is {:2f}".format(distance)+ "m", (100,150), 2, 1, (0,255,0),2)
     return output
 ```
+
+## Discussion
+
