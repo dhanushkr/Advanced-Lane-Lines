@@ -188,3 +188,4 @@ def pipeline(img):
 
 1. Encountered shadow, discoloration in the images needs to be considered and could be solved by tuning parameters and varying color spaces
 2. The performance could be improved by searching from prior and making use of frame to frame information
+3. Challenge video and harder challenge video should be looked at and needs to be improved
