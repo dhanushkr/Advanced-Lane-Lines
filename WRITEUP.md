@@ -163,7 +163,7 @@ def CalculateRadiusOfCurvature(binary_warped,left_fit,right_fit):
     return (left_curverad + right_curverad)/2, distance
 ```
 
-## Pipeline
+## Define Pipeline
 ```
 def pipeline(img):
     # apply combined gradient
