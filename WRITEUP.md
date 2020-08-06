@@ -128,3 +128,58 @@ def find_lanes(binary_warped):
     righty = nonzeroy[right_lane_inds]
     return leftx, lefty, rightx, righty, out_img
 ```
+
+## Radius and Distance
+Calculate the curvature from left and right curvature separately
+```
+def CalculateRadiusOfCurvature(binary_warped,left_fit,right_fit):
+    ym_per_pix = 30/720 # meters per pixel in y dimension
+    xm_per_pix = 3.7/700 # meters per pixel in x dimension
+    
+    ploty = np.linspace(0, binary_warped.shape[0]-1, binary_warped.shape[0] )
+    leftx = left_fit[0]*ploty**2 + left_fit[1]*ploty +left_fit[2]
+    rightx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
+    positionCar= binary_warped.shape[1]/2
+    # Fit new polynomials to x,y in world space
+    left_fit_cr = np.polyfit(ploty*ym_per_pix, leftx*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(ploty*ym_per_pix, rightx*xm_per_pix, 2)
+    # Calculate the new radii of curvature
+    
+    y_eval=np.max(ploty)
+    
+    left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+    right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+    
+    
+    left_lane_bottom = (left_fit[0]*y_eval)**2 + left_fit[0]*y_eval + left_fit[2]
+    right_lane_bottom = (right_fit[0]*y_eval)**2 + right_fit[0]*y_eval + right_fit[2]
+    
+    actualPosition= (left_lane_bottom+ right_lane_bottom)/2
+    
+    distance= (positionCar - actualPosition)* xm_per_pix
+    
+    # Now our radius of curvature is in meters
+    #print(left_curverad, 'm', right_curverad, 'm')
+    return (left_curverad + right_curverad)/2, distance
+```
+
+## Pipeline
+```
+def pipeline(img):
+    # apply combined gradient
+    img = combined_gradient(img)
+    # transform the image
+    binary_warped = getWarped(img)
+    # measure the lanes
+    leftx, lefty, rightx, righty, out_img = find_lanes(binary_warped)
+    left_fit = np.polyfit(lefty, leftx, 2)
+    right_fit = np.polyfit(righty, rightx, 2)
+    # draw the line using left_fit and right_fit
+    output = drawLine(img, left_fit, right_fit)
+    ouput = cv2.cvtColor( output, cv2.COLOR_BGR2RGB )
+    # get radius and curvature 
+    radius, distance= CalculateRadiusOfCurvature(binary_warped,left_fit,right_fit)
+    cv2.putText(output,"Radius of Curvature is "+ str(int(radius))+ "m", (100,100), 2, 1, (0,255,0),2 )
+    cv2.putText(output,"Distance from center is {:2f}".format(distance)+ "m", (100,150), 2, 1, (0,255,0),2)
+    return output
+```
