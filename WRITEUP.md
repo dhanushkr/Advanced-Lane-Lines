@@ -132,7 +132,7 @@ def find_lanes(binary_warped):
 ## Radius and Distance
 Calculate the curvature from left and right curvature separately
 ```
-def CalculateRadiusOfCurvature(binary_warped,left_fit,right_fit):
+def calculate_radius_of_curvature(binary_warped,left_fit,right_fit):
     ym_per_pix = 30/720 # meters per pixel in y dimension
     xm_per_pix = 3.7/700 # meters per pixel in x dimension
     
@@ -175,10 +175,10 @@ def pipeline(img):
     left_fit = np.polyfit(lefty, leftx, 2)
     right_fit = np.polyfit(righty, rightx, 2)
     # draw the line using left_fit and right_fit
-    output = drawLine(img, left_fit, right_fit)
+    output = draw_line(img, left_fit, right_fit)
     ouput = cv2.cvtColor( output, cv2.COLOR_BGR2RGB )
     # get radius and curvature 
-    radius, distance= CalculateRadiusOfCurvature(binary_warped,left_fit,right_fit)
+    radius, distance= calculate_radius_of_curvature(binary_warped,left_fit,right_fit)
     cv2.putText(output,"Radius of Curvature is "+ str(int(radius))+ "m", (100,100), 2, 1, (0,255,0),2 )
     cv2.putText(output,"Distance from center is {:2f}".format(distance)+ "m", (100,150), 2, 1, (0,255,0),2)
     return output
