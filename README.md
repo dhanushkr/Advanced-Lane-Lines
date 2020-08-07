@@ -19,7 +19,7 @@ The aim of the project is to create an pipeline to identify lane lines on the ro
 - [calibration.p](https://github.com/dhanushkr/Advanced-Lane-Lines/blob/master/calibration.p) -  stores the camera matrix and distortion coefficients
 - [Threshold Binary output](threshold_binary_image.ipynb) - applying gradients using sobel and color spaces
 - [Perspective Transform](https://github.com/dhanushkr/Advanced-Lane-Lines/blob/master/perspepctive_transform.ipynb) - Obtaining perspective 
-- [Pipeline](advanced_lane_lines) - Software pipeline to detect lane lines
+- [Pipeline](advanced_lane_lines.ipynb) - Software pipeline to detect lane lines
 ## Licensing, Authors, Acknowledgements<a name="licensing"></a> 
 [MIT License](https://github.com/dhanushkr/Advanced-Lane-Lines/blob/master/LICENSE)
 
