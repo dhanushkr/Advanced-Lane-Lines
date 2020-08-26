@@ -9,7 +9,7 @@
 3. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ## Installation <a name="installation"></a>
-The project requires ```numpy```, ```OpenCV```, ```matplotlib```, ```Moviepy```
+The project requires the following libraries```numpy```, ```OpenCV```, ```matplotlib```, ```Moviepy```
 
 ## Project Motivation<a name="motivation"></a>
 The aim of the project is to create an pipeline to identify lane lines on the road using Camera calibration, gradients and color spaces, perspective transforms and measuring curvature and finding lanes.
